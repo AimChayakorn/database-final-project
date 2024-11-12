@@ -112,6 +112,19 @@ If you do not see the `accounts` table or encounter any issues, try the followin
 
 4. If the issue persists, consider stopping and removing the containers using `docker-compose down`, and then try the installation process again.
 
+## Copying data from csv file to tables
+
+To copy data from csv file to tables, use the following command in given init.sql in /init_files
+
+```
+\copy REVIEW FROM '/init_files/review_mock_data.csv' DELIMITER ',' CSV HEADER;
+\copy MESSAGE FROM '/init_files/message_mock_data.csv' DELIMITER ',' CSV HEADER;
+\copy "user" FROM '/init_files/user_mock_data.csv' DELIMITER ',' CSV HEADER;
+\copy ADMIN FROM '/init_files/admin_mock_data.csv' DELIMITER ',' CSV HEADER;
+\copy "transaction" FROM '/init_files/transaction_mock_data.csv' DELIMITER ',' CSV HEADER;
+\copy ENROLLMENT FROM '/init_files/enrollment_mock_data.csv' DELIMITER ',' CSV HEADER;
+```
+
 ## Stopping and Removing Containers
 
 To stop and remove the containers while keeping the data volumes intact, use the following command:
