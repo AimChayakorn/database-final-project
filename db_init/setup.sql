@@ -1,98 +1,147 @@
-CREATE TABLE REVIEW (
-    Review_id UUID PRIMARY KEY,
-    Send_time TIMESTAMP NOT NULL,
-    Review_message VARCHAR(1024) NOT NULL,
-    Rating INT CHECK (Rating BETWEEN 1 AND 5) NOT NULL
-);
-
-CREATE TABLE MESSAGE (
-    Message_id UUID PRIMARY KEY,
-    Message VARCHAR(1024) NOT NULL,
-    Send_time TIMESTAMP NOT NULL
-);
-
 CREATE TABLE "user" (
-    Email VARCHAR(128) PRIMARY KEY,
-    Bank_account VARCHAR(128) NOT NULL,
-    Role VARCHAR(32),
-    Birthdate DATE,
-    Firstname VARCHAR(64) NOT NULL,
-    Lastname VARCHAR(64) NOT NULL,
-    Phone_number VARCHAR(10),
-    Display_name VARCHAR(64),
-    Password VARCHAR(128) NOT NULL,
-    Contact_Info VARCHAR(256)
+    email VARCHAR(128) PRIMARY KEY,
+    bank_account VARCHAR(128) NOT NULL,
+    role VARCHAR(32) NOT NULL,
+    birthdate TIMESTAMP,
+    firstname VARCHAR(64) NOT NULL,
+    lastname VARCHAR(64) NOT NULL,
+    display_name VARCHAR(64) NOT NULL,
+    password VARCHAR(128) NOT NULL,
+    contact_info VARCHAR(256)
 );
 
-CREATE TABLE ADMIN (
-    Email VARCHAR(128) PRIMARY KEY,
-    FOREIGN KEY (Email) REFERENCES "user"(Email)
+CREATE TABLE Learner (
+    l_email VARCHAR(256) PRIMARY KEY REFERENCES "user"(email),
+    learning_style VARCHAR(128) NOT NULL
 );
 
-CREATE TABLE "transaction" (
-    Transaction_id UUID PRIMARY KEY,
-    Transaction_amount DECIMAL(10,2) CHECK (Transaction_amount > 0) NOT NULL,
-    Actual_amount DECIMAL(10,2),
-    Transaction_date TIMESTAMP NOT NULL,
-    Status VARCHAR(32) CHECK (Status IN ('Pending', 'Completed', 'Failed')) NOT NULL
+CREATE TABLE Learner_Interest (
+    l_email VARCHAR(256) REFERENCES Learner(l_email),
+    interest VARCHAR(128) NOT NULL,
+    PRIMARY KEY (l_email, interest)
 );
 
-CREATE TABLE ENROLLMENT (
-    Enrollment_id UUID PRIMARY KEY,
-    Verify_date TIMESTAMP NOT NULL,
-    Verify_status VARCHAR(32) CHECK (Verify_status IN ('Pending', 'Verified', 'Rejected')) NOT NULL,
-    Image_url VARCHAR(256)
+CREATE TABLE Admin (
+    a_email VARCHAR(256) PRIMARY KEY REFERENCES "user"(email),
+    phone_number VARCHAR(10) NOT NULL
 );
 
-CREATE TABLE LEARNER (
-    Email VARCHAR(128) PRIMARY KEY,
-    Interest VARCHAR(256),
-    FOREIGN KEY (Email) REFERENCES "user"(Email)
+CREATE TABLE Tutor (
+    t_email VARCHAR(256) PRIMARY KEY REFERENCES "user"(email),
+    teaching_style VARCHAR(128) NOT NULL
 );
 
-CREATE TABLE TUTOR (
-    Email VARCHAR(128) PRIMARY KEY,
-    Education VARCHAR(256),
-    Specialization VARCHAR(256),
-    FOREIGN KEY (Email) REFERENCES "user"(Email)
+CREATE TABLE Tutor_Education (
+    t_email VARCHAR(256) REFERENCES Tutor(t_email),
+    education VARCHAR(128) NOT NULL,
+    PRIMARY KEY (t_email, education)
 );
 
-CREATE TABLE TAG (
-    Tag_id UUID PRIMARY KEY,
-    Count INT DEFAULT 0,
-    Tag_name VARCHAR(64) NOT NULL
+CREATE TABLE Tutor_Specialization (
+    t_email VARCHAR(256) REFERENCES Tutor(t_email),
+    specialization VARCHAR(128) NOT NULL,
+    PRIMARY KEY (t_email, specialization)
 );
 
-CREATE TABLE VIDEO (
-    Video_id UUID PRIMARY KEY,
-    Video_title VARCHAR(256) NOT NULL,
-    Video_url VARCHAR(512) NOT NULL,
-    Created_date TIMESTAMP NOT NULL
+CREATE TABLE Course (
+    course_id UUID PRIMARY KEY,
+    price DECIMAL(10, 2) NOT NULL,
+    course_description VARCHAR(1024),
+    subject VARCHAR(128),
+    course_length DECIMAL(5, 2) NOT NULL,
+    created_date TIMESTAMP NOT NULL,
+    course_capacity INT NOT NULL,
+    session_status VARCHAR(32) CHECK (session_status IN ('Scheduled', 'Ongoing', 'Closed', 'TutorConfirmed')) NOT NULL,
+    is_publish BOOLEAN NOT NULL,
+    course_type VARCHAR(16) CHECK (course_type IN ('Live', 'Video')) NOT NULL,
+    l_email VARCHAR(256) REFERENCES Learner(l_email)
 );
 
-CREATE TABLE COURSE (
-    Course_id UUID PRIMARY KEY,
-    Price DECIMAL(10, 2) CHECK (Price > 0),
-    Course_description VARCHAR(256),
-    Subject VARCHAR(64) NOT NULL,
-    Course_length INT CHECK (Course_length > 0),
-    Created_date TIMESTAMP NOT NULL,
-    Number_of_student INT CHECK (Number_of_student >= 0),
-    Course_capacity INT CHECK (Course_capacity > 0) NOT NULL,
-    Location VARCHAR(128),
-    Session_status VARCHAR(32) CHECK (Session_status IN ('Scheduled', 'Ongoing', 'Closed')) NOT NULL,
-    Is_publish BOOLEAN NOT NULL
+CREATE TABLE Have_Tag (
+    course_id UUID REFERENCES Course(course_id),
+    tag_name VARCHAR(32) CHECK (tag_name IN ('Math', 'Science', 'Language', 'Social', 'Music & Arts')) NOT NULL,
+    PRIMARY KEY (course_id, tag_name)
 );
 
-CREATE TABLE VIDEO_COURSE (
-    Course_id UUID PRIMARY KEY,
-    FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id)
+CREATE TABLE Tag (
+    tag_name VARCHAR(32) PRIMARY KEY CHECK (tag_name IN ('Math', 'Science', 'Language', 'Social', 'Music & Arts')),
+    count INT NOT NULL
 );
 
-CREATE TABLE LIVE_COURSE (
-    Course_id UUID PRIMARY KEY,
-    Start_time TIMESTAMP NOT NULL,
-    End_time TIMESTAMP NOT NULL,
-    Location VARCHAR(128) NOT NULL,
-    FOREIGN KEY (Course_id) REFERENCES COURSE(Course_id)
+CREATE TABLE Live_Course (
+    course_id UUID PRIMARY KEY REFERENCES Course(course_id),
+    location VARCHAR(256) NOT NULL,
+    start_time TIMESTAMP NOT NULL
+);
+
+CREATE TABLE Video_Course (
+    course_id UUID PRIMARY KEY REFERENCES Course(course_id)
+);
+
+CREATE TABLE Video (
+    video_id UUID PRIMARY KEY,
+    created_date TIMESTAMP NOT NULL,
+    video_title VARCHAR(128) NOT NULL,
+    video_url VARCHAR(1024) NOT NULL
+);
+
+CREATE TABLE Have_Video (
+    video_id UUID REFERENCES Video(video_id),
+    course_id UUID REFERENCES Course(course_id),
+    PRIMARY KEY (video_id, course_id)
+);
+
+CREATE TABLE Review (
+    review_id UUID PRIMARY KEY,
+    send_time TIMESTAMP NOT NULL,
+    review_message VARCHAR(1024) NOT NULL,
+    rating INT CHECK (rating BETWEEN 1 AND 5) NOT NULL,
+    course_id UUID REFERENCES Course(course_id),
+    l_email VARCHAR(256) REFERENCES Learner(l_email)
+);
+
+CREATE TABLE Message (
+    message_id UUID PRIMARY KEY,
+    send_time TIMESTAMP NOT NULL,
+    message VARCHAR(1024) NOT NULL,
+    sender_email VARCHAR(256) REFERENCES "user"(email),
+    receiver_email VARCHAR(256) REFERENCES "user"(email)
+);
+
+CREATE TABLE Refund_Student (
+    transaction_id UUID PRIMARY KEY,
+    refund_status VARCHAR(16) CHECK (refund_status IN ('Complete', 'Ongoing', 'Fail')) NOT NULL,
+    a_email VARCHAR(256) REFERENCES Admin(a_email),
+    l_email VARCHAR(256) REFERENCES Learner(l_email)
+);
+
+CREATE TABLE Transaction (
+    transaction_id UUID PRIMARY KEY,
+    transaction_date TIMESTAMP NOT NULL,
+    transaction_amount DECIMAL(10, 2) NOT NULL,
+    actual_amount DECIMAL(10, 2) NOT NULL,
+    transaction_status VARCHAR(16) CHECK (transaction_status IN ('Complete', 'Fail', 'Ongoing')) NOT NULL
+);
+
+CREATE TABLE Pay_Tutor (
+    transaction_id UUID REFERENCES Transaction(transaction_id),
+    course_id UUID REFERENCES Course(course_id),
+    a_email VARCHAR(256) REFERENCES Admin(a_email),
+    t_email VARCHAR(256) REFERENCES Tutor(t_email),
+    PRIMARY KEY (transaction_id, course_id)
+);
+
+CREATE TABLE Enroll (
+    enrollment_id UUID PRIMARY KEY,
+    transaction_id UUID REFERENCES Transaction(transaction_id),
+    course_id UUID REFERENCES Course(course_id),
+    l_email VARCHAR(256) REFERENCES Learner(l_email)
+);
+
+CREATE TABLE Enrollment (
+    enrollment_id UUID PRIMARY KEY,
+    verify_date TIMESTAMP NOT NULL,
+    verify_status VARCHAR(16) CHECK (verify_status IN ('Complete', 'Ongoing', 'Fail')) NOT NULL,
+    image_url VARCHAR(1024) NOT NULL,
+    a_email VARCHAR(256) REFERENCES Admin(a_email)
 );

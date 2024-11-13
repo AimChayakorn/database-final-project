@@ -1,0 +1,31 @@
+course_id,price,course_description,subject,course_length,created_date,course_capacity,session_status,is_publish,course_type,l_email
+7d3cc8f9-67c2-479c-84ce-715898683f6f,405.71,Description of course 1,Science,15.68,2023-06-05 06:09:16,23,Scheduled,True,Video,user17@example.com
+74a234cb-f399-4419-ab49-440cccf8f93d,443.18,Description of course 2,Social Studies,4.19,2023-11-17 02:42:46,31,Closed,False,Live,user22@example.com
+4fc5a5bc-23df-4e25-9d3b-ec7dd5ca89c4,538.58,Description of course 3,Language,5.37,2023-08-17 23:13:33,35,Scheduled,False,Video,user11@example.com
+bae1dd26-95d1-4bbf-a7c3-a7d90c31dc90,106.57,Description of course 4,Language,17.45,2023-09-07 22:59:33,25,Ongoing,True,Video,user3@example.com
+df297be8-2258-43e3-9473-96e7b601d955,476.38,Description of course 5,Science,5.61,2023-06-25 02:38:24,22,Closed,True,Video,user21@example.com
+f308a0c4-aa46-470c-9a02-4c273fd0f34a,206.03,Description of course 6,Math,1.91,2023-08-14 17:12:16,17,Closed,True,Live,user21@example.com
+407c1f8d-2d6a-4b3a-9c06-37a608d9eb4a,981.05,Description of course 7,Language,12.68,2023-06-11 01:55:10,36,Scheduled,False,Video,user17@example.com
+3301f3b3-281f-4772-a7b2-5d4859af7b48,902.21,Description of course 8,Language,2.84,2023-02-12 13:39:54,27,Ongoing,True,Live,user24@example.com
+5e50f6f2-2473-4e40-9ade-8e175591cf96,383.82,Description of course 9,Math,14.5,2023-11-14 23:37:31,44,Closed,False,Video,user11@example.com
+d8290bda-4aa9-46b4-ba6c-d83282b8016c,364.43,Description of course 10,Music & Arts,8.75,2023-12-08 18:34:25,17,Scheduled,False,Live,user23@example.com
+6b695f88-d7d0-462e-86d1-a4878ae18713,462.93,Description of course 11,Language,12.36,2023-12-23 00:47:21,31,TutorConfirmed,True,Video,user18@example.com
+ac9d8830-a105-4f17-b9a1-ab86d4c4457c,861.02,Description of course 12,Math,12.63,2023-11-27 15:30:00,43,TutorConfirmed,False,Live,user21@example.com
+fc0f335f-c01b-4059-94ee-b3a337093b2c,818.09,Description of course 13,Math,13.74,2023-09-15 23:31:12,43,TutorConfirmed,False,Video,user21@example.com
+13185a6f-50b4-4e79-922c-fe40dec6bb1c,293.56,Description of course 14,Language,18.28,2023-06-06 22:19:55,17,Closed,False,Live,user26@example.com
+c8a68a5f-ba86-4724-aca8-bd64d01e422f,233.04,Description of course 15,Math,1.59,2023-02-04 12:23:13,32,Closed,True,Live,user2@example.com
+72f30570-ca48-42fe-89d4-305c9439e440,297.08,Description of course 16,Language,14.52,2023-07-25 04:05:26,41,Closed,True,Video,user27@example.com
+95ac66e7-028d-4d88-a4f3-55f589a79571,141.77,Description of course 17,Science,5.96,2023-12-18 03:53:38,43,TutorConfirmed,True,Video,user27@example.com
+6dc39667-790a-498f-956a-aa3befa74d15,389.02,Description of course 18,Science,16.7,2023-06-19 04:55:45,23,Ongoing,False,Live,user12@example.com
+5f711bb2-4ba0-4370-80f0-1e85efaff7a9,653.91,Description of course 19,Music & Arts,17.24,2023-01-19 01:05:52,19,Scheduled,False,Live,user23@example.com
+40438dc3-1765-40d5-84ff-db83fc020121,854.78,Description of course 20,Social Studies,13.71,2023-10-07 05:52:14,37,Closed,True,Live,user15@example.com
+93d6a592-369e-493a-a857-0b15ed793d8f,709.05,Description of course 21,Language,10.69,2023-07-25 17:43:54,19,Ongoing,False,Video,user17@example.com
+ae9cdf61-d556-4d9a-9ee0-dc6c974ba70d,634.69,Description of course 22,Music & Arts,3.76,2023-07-27 17:14:22,38,Scheduled,False,Video,user22@example.com
+331c16dd-dbee-487e-89f7-ce1ec64152c4,897.65,Description of course 23,Social Studies,17.19,2023-09-11 02:24:04,44,TutorConfirmed,False,Live,user17@example.com
+871b6dff-9701-4659-b520-aeacbacc3587,694.31,Description of course 24,Language,9.99,2023-05-22 18:25:22,12,Scheduled,False,Live,user21@example.com
+0ba7f12d-a9c0-4508-a666-7af377f80cf7,828.61,Description of course 25,Music & Arts,2.58,2023-06-25 05:43:06,42,Scheduled,False,Video,user4@example.com
+20ca1871-2c58-43ab-9029-fbac5a629a65,792.62,Description of course 26,Social Studies,9.86,2023-02-21 05:10:57,46,TutorConfirmed,True,Video,user2@example.com
+be8e5ece-0541-4cac-a873-9809dae6c137,245.32,Description of course 27,Science,9.79,2023-02-01 17:53:10,28,Scheduled,True,Live,user21@example.com
+53d2ff11-30f9-4d8d-8ade-1298a031cd1e,825.83,Description of course 28,Science,1.92,2023-09-26 19:52:38,38,Ongoing,True,Video,user18@example.com
+c37d2aa9-41c2-4ab4-838e-489348055f28,814.86,Description of course 29,Science,7.91,2023-08-09 19:51:35,41,Scheduled,True,Video,user12@example.com
+8678d077-253e-4c76-b425-eb880c2abd4b,960.89,Description of course 30,Science,14.04,2023-03-21 16:15:45,33,Closed,True,Live,user19@example.com
