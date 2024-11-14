@@ -31,7 +31,8 @@ CREATE TABLE Learner_Interest (
 
 CREATE TABLE Admin (
     a_email VARCHAR(256) PRIMARY KEY REFERENCES "user"(email),
-    phone_number VARCHAR(10) NOT NULL
+    phone_number VARCHAR(12) NOT NULL
+    CHECK (phone_number ~ '^\+66\d{9}$')
 );
 
 CREATE TABLE Tutor (
