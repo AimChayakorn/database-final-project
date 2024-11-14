@@ -1,3 +1,11 @@
+CREATE TYPE status AS ENUM ('Fail', 'Complete', 'Ongoing');
+
+CREATE TYPE s_status AS ENUM ('Scheduled', 'Ongoing', 'Closed', 'TutorConfirmed', 'LearnerConfirmed');
+
+CREATE TYPE tg_name AS ENUM ('Math', 'Science', 'Language', 'Social', 'Music & Arts');
+
+CREATE TYPE c_type AS ENUM ('Live', 'Video');
+
 CREATE TABLE "user" (
     email VARCHAR(128) PRIMARY KEY,
     bank_account VARCHAR(128) NOT NULL,
@@ -51,20 +59,20 @@ CREATE TABLE Course (
     course_length DECIMAL(5, 2) NOT NULL,
     created_date TIMESTAMP NOT NULL,
     course_capacity INT NOT NULL,
-    session_status VARCHAR(32) CHECK (session_status IN ('Scheduled', 'Ongoing', 'Closed', 'TutorConfirmed')) NOT NULL,
+    session_status s_status NOT NULL,
     is_publish BOOLEAN NOT NULL,
-    course_type VARCHAR(16) CHECK (course_type IN ('Live', 'Video')) NOT NULL,
+    course_type c_type NOT NULL,
     l_email VARCHAR(256) REFERENCES Learner(l_email)
 );
 
 CREATE TABLE Have_Tag (
     course_id UUID REFERENCES Course(course_id),
-    tag_name VARCHAR(32) CHECK (tag_name IN ('Math', 'Science', 'Language', 'Social', 'Music & Arts')) NOT NULL,
+    tag_name tg_name NOT NULL,
     PRIMARY KEY (course_id, tag_name)
 );
 
 CREATE TABLE Tag (
-    tag_name VARCHAR(32) PRIMARY KEY CHECK (tag_name IN ('Math', 'Science', 'Language', 'Social', 'Music & Arts')),
+    tag_name tg_name PRIMARY KEY,
     count INT NOT NULL
 );
 
@@ -110,7 +118,7 @@ CREATE TABLE Message (
 
 CREATE TABLE Refund_Student (
     transaction_id UUID PRIMARY KEY,
-    refund_status VARCHAR(16) CHECK (refund_status IN ('Complete', 'Ongoing', 'Fail')) NOT NULL,
+    refund_status status NOT NULL,
     a_email VARCHAR(256) REFERENCES Admin(a_email),
     l_email VARCHAR(256) REFERENCES Learner(l_email)
 );
@@ -120,7 +128,7 @@ CREATE TABLE Transaction (
     transaction_date TIMESTAMP NOT NULL,
     transaction_amount DECIMAL(10, 2) NOT NULL,
     actual_amount DECIMAL(10, 2) NOT NULL,
-    transaction_status VARCHAR(16) CHECK (transaction_status IN ('Complete', 'Fail', 'Ongoing')) NOT NULL
+    transaction_status status NOT NULL
 );
 
 CREATE TABLE Pay_Tutor (
@@ -141,7 +149,7 @@ CREATE TABLE Enroll (
 CREATE TABLE Enrollment (
     enrollment_id UUID PRIMARY KEY,
     verify_date TIMESTAMP NOT NULL,
-    verify_status VARCHAR(16) CHECK (verify_status IN ('Complete', 'Ongoing', 'Fail')) NOT NULL,
+    verify_status status NOT NULL,
     image_url VARCHAR(1024) NOT NULL,
     a_email VARCHAR(256) REFERENCES Admin(a_email)
 );
